@@ -1,20 +1,22 @@
 # RetailServiceWeb
+
 Case Study: myRetail RESTful service
 ************************************
 
-
 Technology Stack:
 *****************
-Maven 		- https://maven.apache.org/
+Maven 		-   https://maven.apache.org/
 Spring Boot - https://projects.spring.io/spring-boot/
-MongoDB 	- https://www.mongodb.com/
-Swagger 	- http://swagger.io/
+MongoDB 	-   https://www.mongodb.com/
+Swagger 	-   http://swagger.io/
 Mokito      - http://site.mockito.org/
 
 Setup instructions:
 *******************
-Java1.8
+Java 1.8
+
 Maven Install  - https://maven.apache.org/install.html
+
 Eclipse oxygen - https://www.eclipse.org/oxygen/
 Clone code from git repository - <URL>
 Launch Eclipse and Import project - File->import->Existing Maven Project, point to pom.xml file location
