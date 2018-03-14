@@ -5,9 +5,13 @@ Case Study: myRetail RESTful service
 Technology Stack:
 
 Maven 		-   https://maven.apache.org/
+
 Spring Boot - https://projects.spring.io/spring-boot/
+
 MongoDB 	-   https://www.mongodb.com/
+
 Swagger 	-   http://swagger.io/
+
 Mokito      - http://site.mockito.org/
 
 Setup instructions:
