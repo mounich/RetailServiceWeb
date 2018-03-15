@@ -83,7 +83,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 			productsList.add(product5);
 			productsList.add(product6);
 			
-			productRepository.save(productsList);
+			productRepository.insert(productsList);
 			logger.info("Method -->onApplicationEvent : Saved Data to MongoDB DataStore");
 	}
 }

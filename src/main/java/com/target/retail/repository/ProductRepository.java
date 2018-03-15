@@ -10,6 +10,6 @@ public interface ProductRepository extends MongoRepository<Product,String> {
 	 * @param productId
 	 * @returns product details for a given Product ID.
 	 */
-	public Product getProductDetailsById(String productId);
+	public Product getProductDetailsById(String id);
 	
 }

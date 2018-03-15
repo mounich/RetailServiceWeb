@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestTemplateConfiguration {
+public class RestTemplateConfiguration 
+{
 	
 	@Bean
-	public RestTemplate getRestClient() {
+	public RestTemplate getRestClient() 
+	{
 	   return new RestTemplate();
 	}
 }

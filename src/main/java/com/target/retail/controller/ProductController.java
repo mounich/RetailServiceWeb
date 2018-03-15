@@ -24,7 +24,8 @@ import com.target.retail.service.ProductService;
 
 @RequestMapping ("/resources/1.0/products")
 @RestController
-public class ProductController {
+public class ProductController 
+{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
@@ -32,9 +33,11 @@ public class ProductController {
 
 	@RequestMapping(value = "/{productId}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductJSONResponse> getProductDetailsById(@PathVariable("productId") final String productId)
-			throws BadRequestException, InternalServerException, DataNotFoundException {
+			throws BadRequestException, InternalServerException, DataNotFoundException 
+	{
 
-		if(null == productId) {
+		if(null == productId) 
+		{
 			throw new BadRequestException(HttpStatus.BAD_REQUEST.value(),"productId empty in the request");
 		}
 		
@@ -46,13 +49,18 @@ public class ProductController {
 		ProductJSONResponse productJSONResponse = null;
 		CurrentPriceJSONResponse currentPriceJSONResponse = null;
 		CurrentPrice currentPrice = null;
-		if(null == product){
+		
+		if(null == product)
+		{
 			throw new DataNotFoundException(HttpStatus.NOT_FOUND.value(),"productdata not found in Datastore for product ID = "  + productId);
-		}else {
+		}
+		else 
+		{
 			productJSONResponse = new ProductJSONResponse();
 			productJSONResponse.setProductId(product.getId());
 			productJSONResponse.setName(product.getName());
-			if(null != product.getCurrentPrice()){
+			if(null != product.getCurrentPrice())
+			{
 				currentPrice = product.getCurrentPrice();
 				currentPriceJSONResponse = new CurrentPriceJSONResponse();
 				currentPriceJSONResponse.setValue(currentPrice.getValue());
@@ -69,15 +77,19 @@ public class ProductController {
 	@RequestMapping(value = "/{productId}", method = RequestMethod.PUT, produces =MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductJSONResponse> updateProductDetailsById(
 			@PathVariable("productId") final String productId, @RequestBody final ProductJSONRequest productJSONRequest)
-			throws BadRequestException, InternalServerException {
+			throws BadRequestException, InternalServerException 
+	{
 		
-		if(null == productId) {
+		if(null == productId) 
+		{
 			throw new BadRequestException(HttpStatus.BAD_REQUEST.value(),"productId empty in the request");
 		}
-		if(null == productJSONRequest) {
+		if(null == productJSONRequest) 
+		{
 			throw new BadRequestException(HttpStatus.BAD_REQUEST.value(),"productdata empty in the body");
 		}
-        if (!productId.equalsIgnoreCase(productJSONRequest.getProductId())) {
+        if (!productId.equalsIgnoreCase(productJSONRequest.getProductId())) 
+        {
         	throw new BadRequestException(HttpStatus.BAD_REQUEST.value(),"productId in incoming Path URL and request body does not match");
         }
 		
@@ -88,7 +100,8 @@ public class ProductController {
 		product.setName(productJSONRequest.getName());
 		CurrentPrice currentPrice = null;
 		CurrentPriceJSONRequest currentPriceJSONRequest = null;
-		if (null != productJSONRequest.getCurrentprice()) {
+		if (null != productJSONRequest.getCurrentprice()) 
+		{
 			currentPriceJSONRequest = productJSONRequest.getCurrentprice();
 			currentPrice = new CurrentPrice();
 			currentPrice.setValue(currentPriceJSONRequest.getValue());

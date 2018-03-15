@@ -24,6 +24,7 @@ public class ProductService {
 	
 	public ProductService() {}
 	
+	//where exactly is the method implementation and where is it getting product from
 	public Product getProductDetailsById(String productId) throws InternalServerException, DataNotFoundException {
 		Product product = null;
 		product = productRepository.getProductDetailsById(productId);

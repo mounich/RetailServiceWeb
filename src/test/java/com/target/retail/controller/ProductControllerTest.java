@@ -29,8 +29,8 @@ import com.target.retail.service.ProductService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(value = ProductController.class, secure = false)
-public class ProductControllerTest {
-	
+public class ProductControllerTest 
+{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired 
@@ -42,10 +42,12 @@ public class ProductControllerTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+		//This initializes objects annotated with Mockito annotations for given testClass. 
 	}
 	
 	@Test
-	public void getProductDetailsByIdTest() throws Exception{
+	public void getProductDetailsByIdTest() throws Exception
+	{
 		//Create Mock Product with ID = 13860428
 		Product product = new Product();
 		product.setId("13860428");
@@ -55,16 +57,24 @@ public class ProductControllerTest {
 		currentPrice.setValue(13.49);
 		product.setCurrentPrice(currentPrice);
 		Mockito.when(productService.getProductDetailsById(Mockito.anyString())).thenReturn(product);
+		//so whenever a productService.getProductDetailsById is called with an input parameter of any string, then return the mock product.
 
 		//Compare MockMVC response for Product with ID = 13860428 with expected value.
 		RequestBuilder builder = MockMvcRequestBuilders.get("/resources/1.0/products/13860428").accept(MediaType.APPLICATION_JSON_VALUE);
+		//Creating a Request builder to be able to execute a get request to uri with accept header as “application/json”
+
 		MvcResult actual = mockMvc.perform(builder).andReturn();
+		//mockMvc is used to perform the request and return the response back.
+		
 		String expected = "{\"id\":\"13860428\",\"name\":\"The Big Lebowski (Blu-ray)\",\"current_price\":{\"value\": 13.49,\"currency_code\":\"USD\"}}";
+		
 		JSONAssert.assertEquals(expected, actual.getResponse().getContentAsString(), false);
+		//We are using org.skyscreamer.jsonassert.JSONAssert. This allows us to do partial asserts against a JSON String. We are passing strict as false since we do not want to check for all fields in the response.
 	}
 
 	@Test
-	public void getProductDetailsForWrongIdTest() throws Exception {
+	public void getProductDetailsForWrongIdTest() throws Exception 
+	{
 		try {
 			//Construct Mock Error Object.
 			ErrorResponse errorResponse = new ErrorResponse();
@@ -75,12 +85,20 @@ public class ProductControllerTest {
 			//and Compare ErrorMessage/ErrorCode thrown from Service against the local created ErrorResponse Object.
 			String response = mockMvc.perform(MockMvcRequestBuilders.get("/resources/1.0/products/45345345"))
 					.andReturn().getResponse().getContentAsString();
+			//mockMvc is used to perform the request and return the response back.
+			
 			ErrorResponse mockErroresponse = new ObjectMapper().readValue(response, ErrorResponse.class);
+			//mapper is a mocked object, and the mocked mapper is set to the instance you are trying to test.
+			//can be used to parse or deserialize JSON content into a Java object.
+			
 			
 			assertEquals(errorResponse.getErrorMsg(), mockErroresponse.getErrorMsg());
+			
 			assertEquals(errorResponse.getErrorCode(), mockErroresponse.getErrorCode());
 			
-		} catch (DataNotFoundException e) {
+		} 
+		catch (DataNotFoundException e) 
+		{
 			logger.debug("Data not found for product in test sucess.");
 		}
 	}

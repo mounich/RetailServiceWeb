@@ -22,14 +22,17 @@ public class RetailServiceWebApplication {
 	}
 
 	@Bean
+	//to give you more control over the API documentation generation process.
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.target.retail.controller"))
 				.paths(PathSelectors.ant("/resources/1.0/products/*")).build().apiInfo(apiInfo());
 	}
+	
+	//ApiInfo for customizing the application
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo("Target Retail REST API", "API for Retrieve/Update Product Information.", "2.0",
+		return new ApiInfo("Target Retail REST API", "API to Retrieve/Update Product Information.", "2.0",
 				"Terms of service", new Contact("Chilukuri Mounica", "", ""), "", "", Collections.emptyList());
 	}
 }

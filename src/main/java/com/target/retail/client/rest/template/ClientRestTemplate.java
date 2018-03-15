@@ -40,33 +40,45 @@ public class ClientRestTemplate {
 		String response = null;
 		JSONObject jsonObject = null;
 		JSONObject productDesc = null;
-		try {
+		try 
+		{
 			builder = UriComponentsBuilder.fromUriString(productNameEndPoint + productId);
 			builder.queryParam("excludes","taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics");
 			logger.info("Method -->getProductNameFromProductEndPoint : URI " + builder.build().encode().toUri());
 			response = restTemplate.getForObject(builder.build().encode().toUri(), String.class);
-			if (null != response) {
+			if (null != response) 
+			{
 				logger.info("response :" + response);
 				jsonObject = new JSONObject(response);
 				if (null != jsonObject.getJSONObject(PRODUCT)
 						&& null != jsonObject.getJSONObject(PRODUCT).getJSONObject(PRODUCT_ITEM) 
-								&& null != jsonObject.getJSONObject(PRODUCT).getJSONObject(PRODUCT_ITEM).getJSONObject(PRODUCT_DESCRIPTION)) {
+								&& null != jsonObject.getJSONObject(PRODUCT).getJSONObject(PRODUCT_ITEM).getJSONObject(PRODUCT_DESCRIPTION)) 
+				{
 									productDesc = jsonObject.getJSONObject(PRODUCT).getJSONObject(PRODUCT_ITEM).getJSONObject(PRODUCT_DESCRIPTION);
 									productName = productDesc.getString(PRODUCT_TITLE);
-										if(null == productName){
+										if(null == productName)
+										{
 											throw new DataNotFoundException(HttpStatus.NOT_FOUND.value(),"productname not found for productId = "+ productId);
 										}
-				} else {
+				} 
+				else 
+				{
 					throw new DataNotFoundException(HttpStatus.NOT_FOUND.value(),
 							"product or product item or product description not found for ProductID = " + productId
 									+ "based on constructed URL = " + builder.build().encode().toUri());
 				}
 			}
-		} catch (JSONException je) {
+		} 
+		catch (JSONException je) 
+		{
 			throw new InternalServerException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "cannot parse json response for productId= "+productId);
-		} catch (RestClientException rce) {
+		} 
+		catch (RestClientException rce)
+		{
 			throw new InternalServerException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "error while accessing endpoint " + builder.build().encode().toUri() + " for productId = "+productId);
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) 
+		{
 			throw new InternalServerException(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
 		}
 		return productName;
